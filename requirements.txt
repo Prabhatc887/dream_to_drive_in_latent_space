@@ -1,6 +1,6 @@
 torch
 torchvision
-gymnasium[box2d]
+# gymnasium
 numpy
 opencv-python
 tqdm
@@ -8,8 +8,6 @@ matplotlib
 scikit-learn
 imageio
 pillow
-
-
-stable-baselines3[extra]
+# stable-baselines3[extra]
 pygame
 tensorboard
