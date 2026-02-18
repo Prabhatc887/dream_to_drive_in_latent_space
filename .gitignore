@@ -6,3 +6,4 @@ __pycache__/
 ppo_models/
 ppo_logs/
 .vscode/
+vae_carracing.pth
