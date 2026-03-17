@@ -1,43 +1,112 @@
+# World Model Transformer for Policy Learning
+
+## 🚀 Project Introduction
+
+In this project, trained an agent to learn policies using a **Transformer-based World Model architecture**.  
+The goal is to build a system that can understand environment dynamics in a latent space and use that understanding to take optimal actions.
+
+Instead of directly learning from raw pixel observations, the model:
+- Compresses observations into a latent space
+- Learns temporal dynamics using a Transformer-based world model
+- Uses this learned representation to train a controller for decision making
+
+This approach improves **sample efficiency**, **generalization**, and provides a way to simulate environments internally.
 
 ---
 
-# Dream To Drive in Latent Space
+## 🧠 World Model Architecture
 
-This project implements a World Model for a self-driving car using reinforcement learning and deep learning techniques. The model learns a latent representation of the car's environment through a Variational Autoencoder (VAE) and predicts future states using a Transformer / RNN-based dynamics model. The goal is to simulate and understand the environment efficiently while reducing the need for real-world data collection.
+![World Model Architecture](images/world_model_archi.png)
 
----
+The architecture consists of three main components:
 
-# Features:
-
-* Collect driving data from OpenAI Gym CarRacing-v3 environment.
-* Train a Variational Autoencoder (VAE) to encode high-dimensional images into low-dimensional latent vectors.
-* Train a Transformer / RNN to predict the next latent state based on the current state and actions.
-* Save and visualize reconstructed frames from the VAE.
-* Generate sequences of imagined states for planning or reinforcement learning.
-
----
-# Architecture - Pipeline
-![Architecture Pipeline](images/pipeline.png)
-
-
-# Description:
-
-Data Collection: Collect observations, actions, rewards, and done flags from the CarRacing environment.
-
-VAE (V Model): Encode raw frames into a compact latent vector z.
-
-Dynamics Model (M Model): Predict next latent state z_{t+1} given z_t and action_t.
-
-Imagination / Prediction: Use latent predictions to simulate future environment states.
-
-Decoder (Optional): Reconstruct images from predicted latent vectors for visualization.
+- **V (Vision Model):** Encodes high-dimensional observations into latent representations  
+- **M (Memory Model - Transformer):** Learns temporal dynamics in latent space  
+- **C (Controller):** Outputs actions to maximize expected reward  
 
 ---
 
-# References:
+## 👁️ Vision Model (V)
 
-1. Ha, David & Schmidhuber, Jürgen. (2018). World Models. [https://arxiv.org/abs/1803.10122](https://arxiv.org/abs/1803.10122)
-2. Hafner, Danijar et al. (2020). Dreamer: Reinforcement Learning with Latent Dynamics Models. [https://arxiv.org/abs/1912.01603](https://arxiv.org/abs/1912.01603)
-3. OpenAI Gymnasium – CarRacing-v3. [https://www.gymlibrary.dev/environments/box2d/carracing/](https://www.gymlibrary.dev/environments/box2d/carracing/)
+![VAE Reconstruction](images/recon_V.png)
 
+The above image shows:
+- **Real input image**
+- **Reconstructed image after VAE encoding and decoding**
 
+We can observe that the V model is able to:
+- Effectively encode state images into a **compact latent space**
+- Reconstruct the original image with high fidelity using the decoder
+
+This demonstrates that the latent representation preserves the **important features of the environment**, which is crucial for learning policies.
+
+---
+
+## 🔁 Transformer-Based World Model (M)
+
+![Transformer World Model](images/MDN-Transformers.png)
+
+The memory model is implemented using a **Transformer architecture**.
+
+Unlike traditional RNN-based approaches, the Transformer:
+- Captures long-term dependencies more effectively  
+- Uses attention mechanisms to understand temporal relationships  
+- Learns structured dynamics in latent space  
+
+This allows the agent to better understand how the environment evolves over time.
+
+---
+
+## 🔮 Learning Environment Dynamics
+
+The model is trained such that it predicts the **next state latent representation**.
+
+- This forces the network to learn the **true dynamics of the environment**
+- Instead of memorizing, it builds an internal model of transitions
+
+### Predicted Latent States (Decoded for Visualization)
+
+![Predicted Latent States](images/seq_recon_world_model.png)
+
+The above figure shows decoded predictions from the model so that we can visually interpret how well it understands environment transitions.
+
+---
+
+## 🏗️ Overall Architecture
+
+![Overall Architecture](images/pipeline.png)
+
+This combines:
+- Vision model (V)
+- Transformer-based memory model (M)
+- Controller (C)
+
+Together, they form a complete **world model-based reinforcement learning system**.
+
+---
+
+## 🎮 Controller Training (CMA-ES)
+
+![CMA-ES Training](images/cma-es.png)
+
+The controller is trained using **CMA-ES (Covariance Matrix Adaptation Evolution Strategy)**.
+
+- It takes latent state + memory context as input  
+- Outputs actions that maximize expected reward  
+- Works well in continuous control settings  
+
+---
+
+## 📈 Generation vs Reward
+
+![Reward Graph](images/reward.png)
+
+The graph shows:
+- Improvement of reward over generations  
+- Efficient learning using latent representations and world modeling  
+
+---
+
+## 🎥 Final Result (Video)
+
+![Demo Video](videos/video.mp4)
