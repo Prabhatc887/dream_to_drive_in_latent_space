@@ -1,4 +1,4 @@
-# World Model Transformer for Policy Learning
+# Transformer Based World Model for Policy Learning
 
 ## Introduction
 
