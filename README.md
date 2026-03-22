@@ -16,7 +16,7 @@ This approach improves **sample efficiency**, **generalization**, and provides a
 
 ##  World Model Architecture
 
-![World Model Architecture](images/world_model_archi.png)
+![World Model Architecture](images/mdn-transformer.png)
 
 The architecture consists of three main components:
 
