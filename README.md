@@ -42,7 +42,7 @@ This demonstrates that the latent representation preserves the **important featu
 
 ---
 
-## 🔁 Transformer-Based World Model (M)
+##  Transformer-Based World Model (M)
 
 ![Transformer World Model](images/MDN-Transformers.png)
 
@@ -109,4 +109,4 @@ The graph shows:
 
 ## Final Result (Video) using world model(M) and VAE model(V)
 
-![video](videos/video.mp4)
+![video](videos/final.mp4)
